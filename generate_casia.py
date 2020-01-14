@@ -3,6 +3,8 @@ import numpy as np
 from PIL import Image
 from PIL import ImageOps
 
+import sys
+sys.path.append("PyCasia")
 from pycasia.CASIA import CASIA
 
 def resize_and_padding(img, size):
@@ -16,7 +18,7 @@ def resize_and_padding(img, size):
     print(px, py)
     return ImageOps.expand(img, (px, py, px, py), fill=255)
 
-def process(dataset="competition-gnt", output_filename):
+def process(dataset="competition-gnt", output_filename="train.pt"):
     casia = CASIA()
 
     image_dict = defaultdict(lambda: [])
