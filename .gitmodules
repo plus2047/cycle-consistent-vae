@@ -1,0 +1,3 @@
+[submodule "PyCasia"]
+	path = PyCasia
+	url = http://github.com/plus2047/PyCasia.git
