@@ -21,9 +21,10 @@ def resize_and_padding(img, size):
 def process(dataset="competition-gnt", output_filename="train.pt"):
     casia = CASIA()
 
-    image_dict = defaultdict(lambda: [])
+    origin_image_list, label_list = [], []
     for image, label in casia.load_dataset(dataset):
-        image_dict[label].append(image)
+        origin_image_list.append(image)
+        label_list.append(label)
 
     def resize_and_padding(img, size):
         x, y = size
@@ -51,3 +52,7 @@ def process(dataset="competition-gnt", output_filename="train.pt"):
     index_tensor = torch.tensor(index_list)
 
     torch.save((data_tensor, index_tensor), output_filename)
+
+
+if __name__ == "__main__":
+    process()
