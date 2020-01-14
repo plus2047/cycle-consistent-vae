@@ -82,7 +82,7 @@ class Decoder(nn.Module):
         class_embeddings = F.leaky_relu_(self.class_input(class_embeddings), negative_slope=0.2)
 
         x = torch.cat((style_embeddings, class_embeddings), dim=1)
-        x = x.view(x.size(0), 128, 2, 2)
+        x = x.view(x.size(0), 128, 15, 15)
         x = self.deconv_model(x)
 
         return x
