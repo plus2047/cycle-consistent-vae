@@ -9,6 +9,8 @@ from itertools import cycle
 from collections import OrderedDict
 from utils import reparameterize, transform_config
 
+CONV_OUTPUT_SIZE = 14400
+
 
 class Encoder(nn.Module):
     def __init__(self, style_dim, class_dim):
@@ -32,11 +34,11 @@ class Encoder(nn.Module):
         ]))
 
         # Style embeddings
-        self.style_mu = nn.Linear(in_features=256, out_features=style_dim, bias=True)
-        self.style_logvar = nn.Linear(in_features=256, out_features=style_dim, bias=True)
+        self.style_mu = nn.Linear(in_features=CONV_OUTPUT_SIZE, out_features=style_dim, bias=True)
+        self.style_logvar = nn.Linear(in_features=CONV_OUTPUT_SIZE, out_features=style_dim, bias=True)
 
         # Class embeddings
-        self.class_output = nn.Linear(in_features=256, out_features=class_dim, bias=True)
+        self.class_output = nn.Linear(in_features=CONV_OUTPUT_SIZE, out_features=class_dim, bias=True)
 
     def forward(self, x):
         x = self.conv_model(x)
@@ -54,10 +56,10 @@ class Decoder(nn.Module):
         super(Decoder, self).__init__()
 
         # Style embeddings input
-        self.style_input = nn.Linear(in_features=style_dim, out_features=256, bias=True)
+        self.style_input = nn.Linear(in_features=style_dim, out_features=CONV_OUTPUT_SIZE, bias=True)
 
         # Class embeddings input
-        self.class_input = nn.Linear(in_features=class_dim, out_features=256, bias=True)
+        self.class_input = nn.Linear(in_features=class_dim, out_features=CONV_OUTPUT_SIZE, bias=True)
 
         self.deconv_model = nn.Sequential(OrderedDict([
             ('deconvolution_1',
